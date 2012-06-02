@@ -1,4 +1,4 @@
-generateSibeliusContentPkg
+GenerateSibeliusContentPkg
 ==========================
 
 Overview
