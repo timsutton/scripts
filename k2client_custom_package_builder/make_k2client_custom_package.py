@@ -12,17 +12,22 @@
 # configure these for your org:
 k2ConfigOpts = ['-h', 'org.example.k2server', '-g', 'yes', '-s', '2', '-l', 'yes']
 
-import os, subprocess, sys, urllib, plistlib, shutil
+import os
+import subprocess
+import sys
+import urllib
+import plistlib
+import shutil
 
 scriptDir = os.path.dirname(sys.argv[0])
 distVolume = '/Volumes/K2Client'		# making assumptions about the volume title...
-K2ClientURL = 'http://www.sassafras.com/links/K2Client.dmg'	# download URL from Sassafras
+K2ClientURL = 'http://www.sassafras.com/links/K2Client.dmg'
 distDmgDownloadPath = os.path.join(scriptDir, 'K2Client.dmg')
 
 k2ConfigCmd = 'k2clientconfig'
 k2ConfigPath = os.path.join(scriptDir, 'K2Client.mpkg', 'Contents', 'Resources', k2ConfigCmd)
-k2ConfigFull = [ k2ConfigPath ] + k2ConfigOpts
-k2ConfigDebug = [ k2ConfigPath ] + ['-d']
+k2ConfigFull = [k2ConfigPath] + k2ConfigOpts
+k2ConfigDebug = [k2ConfigPath] + ['-d']
 
 print 'Downloading K2Client...'
 urllib.urlretrieve(K2ClientURL, os.path.join(scriptDir, distDmgDownloadPath))
@@ -30,10 +35,10 @@ print 'Mounting dmg...'
 subprocess.call(['/usr/bin/hdiutil', 'attach', '-nobrowse', '-quiet', distDmgDownloadPath])
 print 'Copying K2Client.mpkg...'
 if os.path.exists(distVolume):
-	# being lazy and using cp to ensure copying potential resource forks/xattrs
-	subprocess.call(['cp', '-R', '/Volumes/K2Client/K2Client.mpkg', scriptDir])
+    # being lazy and using cp to ensure copying potential resource forks/xattrs
+    subprocess.call(['cp', '-R', '/Volumes/K2Client/K2Client.mpkg', scriptDir])
 else:
-	sys.exit(1)
+    sys.exit(1)
 print 'Unmounting DMG...'
 subprocess.call(['/usr/bin/hdiutil', 'detach', distVolume])
 
@@ -56,4 +61,3 @@ print "Cleaning up..."
 shutil.rmtree(os.path.join(scriptDir, k2VersionedFolder))
 os.remove(os.path.join(scriptDir, 'K2Client.dmg'))
 print "Done."
-sys.exit(0)
