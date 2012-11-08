@@ -1,4 +1,14 @@
 #!/usr/bin/python
+#
+# Make arbitrary changes to the TCC sqlite3 database, which stores the
+# applications that are allowed to access a user's contacts.
+#
+# Accepted input is in the form of a plist - see the 'tcc_services.plist' example.
+# It will add entries that don't already exist and update existing ones. It does not remove
+# entries that are present in the DB but not in the input plist.
+#
+# Ideally we could pass app bundle names or .app paths directly at the command line so that changes can
+# be made more atomically or run as one-off commands in a LaunchAgent script, for example.
 
 import sqlite3
 import os
