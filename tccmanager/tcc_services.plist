@@ -4,33 +4,33 @@
 <dict>
 	<key>kTCCServiceAddressBook</key>
 	<dict>
-        <key>com.adiumX.adiumX</key>
-        <dict>
-            <key>client_type</key>
-            <integer>0</integer>
-            <key>allowed</key>
-            <integer>1</integer>
-            <key>prompt_count</key>
-            <integer>0</integer>
-        </dict>
-        <key>com.macromates.TextMate.preview</key>
-        <dict>
-            <key>client_type</key>
-            <integer>0</integer>
-            <key>allowed</key>
-            <integer>0</integer>
-            <key>prompt_count</key>
-            <integer>0</integer>
-        </dict>
-        <key>com.apple.FinalCutPro</key>
-        <dict>
-            <key>client_type</key>
-            <integer>0</integer>
-            <key>allowed</key>
-            <integer>1</integer>
-            <key>prompt_count</key>
-            <integer>0</integer>
-        </dict>
-    </dict>
+		<key>com.adiumX.adiumX</key>
+		<dict>
+			<key>client_type</key>
+			<integer>0</integer>
+			<key>allowed</key>
+			<integer>1</integer>
+			<key>prompt_count</key>
+			<integer>0</integer>
+		</dict>
+		<key>com.macromates.TextMate.preview</key>
+		<dict>
+			<key>client_type</key>
+			<integer>0</integer>
+			<key>allowed</key>
+			<integer>0</integer>
+			<key>prompt_count</key>
+			<integer>0</integer>
+		</dict>
+		<key>com.apple.FinalCutPro</key>
+		<dict>
+			<key>client_type</key>
+			<integer>0</integer>
+			<key>allowed</key>
+			<integer>1</integer>
+			<key>prompt_count</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
 </dict>
 </plist>
