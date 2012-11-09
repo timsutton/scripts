@@ -45,15 +45,21 @@ def createDB(path):
     conn.close()
 
 def main():
-    o = optparse.OptionParser()
+    usage = "usage: %prog --plist db_entries.plist | (--allow | --disallow) app.bundle.id"
+    o = optparse.OptionParser(usage=usage)
     o.add_option('-p', '--plist', action="store",
         help='Path to a plist to be synced to the TCC db.')
-    # o.add_option('-a', '--allow', metavar="bundle-id",
-    #     help='Name of an application bundle ID to allow access to contacts.')
-    # o.add_option('-d', '--disallow', metavar="bundle-id",
-    #     help='Name of an application bundle ID to disallow access to contacts.')
+    o.add_option('-a', '--allow', metavar="bundle-id", action="append",
+        help='Name of an application bundle ID to allow access to contacts. \
+Can be specified multiple times.')
+    o.add_option('-d', '--disallow', metavar="bundle-id", action="append",
+        help='Name of an application bundle ID to disallow access to contacts. \
+Can be specified multiple times.')
     opts, args = o.parse_args()
 
+    if (opts.plist and opts.allow) or (opts.plist and opts.disallow):
+        print "--plist option is mutually exclusive to using --allow or --disallow."
+        sys.exit(1)
 
     db_exists = False
     if not os.path.exists(TCC_DIR):
@@ -86,6 +92,19 @@ def main():
                     attrs['prompt_count'])
                 c.execute('''INSERT or REPLACE INTO access values
                     (?, ?, ?, ?, ?)''', data)
+                conn.commit()
+
+    else:
+        if opts.allow:
+            for bundle_id in opts.allow:
+                c.execute('''INSERT or REPLACE INTO access values
+                    ('kTCCServiceAddressBook', ?, 0, 1, 0)''', (bundle_id,))
+                conn.commit()
+
+        if opts.disallow:
+            for bundle_id in opts.disallow:
+                c.execute('''INSERT or REPLACE INTO access values
+                    ('kTCCServiceAddressBook', ?, 0, 0, 0)''', (bundle_id,))
                 conn.commit()
 
     conn.close()
