@@ -10,8 +10,7 @@ Edit the config options at the top of the script to set options for the Wordpres
 
 ## example usage
 
-<code>icnsToWp.py --size 128 --wordpress-upload --include-retina \
-/Applications/TextEdit.app/Contents/Resources/Edit.icns</code>
+<code>icnsToWp.py --size 128 --wordpress-upload --include-retina /Applications/TextEdit.app/Contents/Resources/Edit.icns</code>
 
 For detailed usage and options:
 
