@@ -6,7 +6,9 @@
 import os
 import sys
 import subprocess
+import plistlib
 from time import strftime, localtime
+import re
 import psutil		# psutil is used to more easily detect whether repo_sync is already running
 
 import smtplib
@@ -18,6 +20,10 @@ from email import Encoders
 
 LOGDIR = '/var/log/reposado'
 REPO_SYNC = '/home/reposado/git/reposado/code/repo_sync'
+REPO_PREFS = '/home/reposado/git/reposado/code/preferences.plist'
+prefs = plistlib.readPlist(REPO_PREFS)
+
+
 
 mail_from = "reposado@my.org"
 mail_to = ["admin@my.org"]
@@ -78,6 +84,15 @@ except:
     sys.exit(1)
 
 if logfile_contents.find('pkg') != -1:
+    meta = plistlib.readPlist(os.path.join(prefs['UpdatesMetadataDir'], 'ProductInfo.plist'))
+    distpaths = re.findall("content/.*English.dist", logfile_contents)
+    localdists = [os.path.join(prefs['UpdatesRootDir'], p) for p in distpaths]
     subject = "Reposado log"
     body = logfile_contents
+    body += "\n\n"
+    for dist in localdists:
+        distcontent = open(dist, 'r')
+        body += distcontent.read()
+        distcontent.close()
+        body += "\n\n\n"
     send_mail(mail_from, mail_to, subject, body, files=[], server=smtpserver)
