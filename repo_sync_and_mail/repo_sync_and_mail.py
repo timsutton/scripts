@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
 # Simple wrapper for repo_sync. Saves a datestamped log to LOGDIR, and e-mails the log if
-# the log contains the string '.pkg'. (ie. if a new product was replicated)
+# the log contains the string '.pkg'. (ie. if a new product was replicated). The log will
+# also contain the contents of English.dist for any new products.
 
 import os
 import sys
