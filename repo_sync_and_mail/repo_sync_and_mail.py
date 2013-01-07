@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 from time import strftime, localtime
+import psutil		# psutil is used to more easily detect whether repo_sync is already running
 
 import smtplib
 from email.MIMEMultipart import MIMEMultipart
@@ -22,6 +23,13 @@ mail_from = "reposado@my.org"
 mail_to = ["admin@my.org"]
 smtpserver = "smtp.my.org"
 
+def reposync_is_running():
+    proclist = psutil.get_process_list()
+    for p in proclist:
+        for arg in p.cmdline:
+            if os.path.split(arg)[1] == 'repo_sync':
+                return True
+    return False
 
 # E-mail code largely based on http://code.google.com/p/munki/wiki/PreflightAndPostflightScripts
 def send_mail(send_from, send_to, subject, text, files=[], server="localhost"):
@@ -48,6 +56,9 @@ def send_mail(send_from, send_to, subject, text, files=[], server="localhost"):
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
 
+if reposync_is_running():
+    print "repo_sync is already running. Exiting.."
+    sys.exit(1)
 
 if not os.path.exists(LOGDIR):
     os.mkdir(LOGDIR)
