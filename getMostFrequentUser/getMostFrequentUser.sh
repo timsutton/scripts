@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ac -p | awk '!/total/' | sort -rnk 2 | awk '{print $1}' | head -n 1
+ac -p | sort -nrk 2 | awk 'NR == 2 { print $1; exit }'
