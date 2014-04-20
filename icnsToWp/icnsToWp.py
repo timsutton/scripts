@@ -64,7 +64,7 @@ COMPRESS_TOOL at top of this script edit paths and options." % (OPTI_TOOL, COMPR
         versions.append('@2x')
 
     for icnsfile in args:
-        icons_out = mkdtemp()
+        icons_out = mkdtemp() + ".iconset"
         call([ICONUTIL, '-c', 'iconset', icnsfile, '-o', icons_out])
         for size in opts.size:
             for version in versions:
