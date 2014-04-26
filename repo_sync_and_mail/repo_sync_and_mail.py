@@ -33,7 +33,7 @@ smtpserver = "smtp.my.org"
 def reposync_is_running():
     proclist = psutil.get_process_list()
     for p in proclist:
-        for arg in p.cmdline:
+        for arg in p.cmdline():
             if os.path.split(arg)[1] == 'repo_sync':
                 return True
     return False
