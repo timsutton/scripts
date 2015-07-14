@@ -5,7 +5,8 @@
 # also contain the contents of English.dist for any new products.
 #
 # Additional requirements:
-# - 'psutil' module, available from PyPi, minimum version 2.0.0
+# - 'psutil' module, available from PyPi - version currently tested with this script is
+#   2.1.1, provided by the Debian Jessie 'python-psutil' apt package
 
 import os
 import sys
@@ -37,7 +38,7 @@ def reposync_is_running():
     proclist = psutil.get_process_list()
     for p in proclist:
         for arg in p.cmdline():
-            if os.path.split(arg)[1] == 'repo_sync':
+            if os.path.basename(arg) == 'repo_sync':
                 return True
     return False
 
